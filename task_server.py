@@ -95,6 +95,7 @@ def update_task(task_id):
 
 @app.route('/api/v1.0/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
+	print(str(task_id))
 	# delete the task
 	task = db_interaction.remove_task_by_id(int(task_id))
 
