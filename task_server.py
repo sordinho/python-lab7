@@ -7,7 +7,7 @@ Last updated on Apr 30, 2018
 @author: Luigi De Russis, Teodoro Montanaro, Alberto Monge Roffarello
 """
 
-from flask import Flask, jsonify, abort, request, Response, render_template
+from flask import Flask, jsonify, abort, request, Response, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
 import db_interaction
 
@@ -21,6 +21,9 @@ Bootstrap(app)
 def tasks():
 	return render_template("tasks.html")
 
+@app.route('/')
+def welcome():
+	return redirect(url_for('tasks'))
 
 # ---------- REST SERVER ----------
 @app.route('/api/v1.0/tasks', methods=['GET'])

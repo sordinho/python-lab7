@@ -1,21 +1,34 @@
-//attach an event handler on when the page is ready. using anonimous inner function (name is optional)
-$(document).ready(function () {
+var RESTAPI = "http://127.0.0.1:5000/api/v1.0";
+
+function loadList() {
     // we need to execute this only after the page is loaded
     $("#tasklist").append("<ul></ul>");
 
     $.getJSON("http://127.0.0.1:5000/api/v1.0/tasks", function (data) {
         // data is a parameter. it contains the response given by api and is already parsed from json to js variable
         var tasklist = data["tasks"];
-        for (var i = 0; i<tasklist.length; i++){
+        for (var i = 0; i < tasklist.length; i++) {
             var t = tasklist[i];
-            $("#tasklist ul").append("<li>"+t.description+"</li>"); // same as t["description"}
+            $("#tasklist ul").append("<li>" + t.description + "</li>"); // same as t["description"}
         }
-
     });
-});
+}
 
-$("form").submit(function () {
-    var description = $("input[name='description']").val();
+$(document).ready(function () {
+    loadList();
+    $("form").submit(function () {
+        var description = $("input[name='description']").val();
+        var urgent = 0;
+        var task = {"description": description, "urgent": urgent};
 
-    return false; // don't submit the form from browser
+        var taskJSON = JSON.stringify(task);
+
+        $.post({
+            "url": RESTAPI + '/tasks',
+            "data": taskJSON,
+            "contentType": "application/json",
+            "success": function(){load_task_list()}
+        });
+        return true;
+    });
 });
