@@ -15,12 +15,10 @@ function loadList() {
 }
 
 $(document).ready(function () {
-    loadList();
     $("form").submit(function () {
         var description = $("input[name='description']").val();
         var urgent = 0;
         var task = {"description": description, "urgent": urgent};
-
         var taskJSON = JSON.stringify(task);
 
         $.post({
@@ -29,6 +27,8 @@ $(document).ready(function () {
             "contentType": "application/json",
             "success": function(){load_task_list()}
         });
+
         return true;
     });
+    loadList();
 });
