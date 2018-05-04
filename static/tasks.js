@@ -9,7 +9,7 @@ function loadList() {
         var tasklist = data["tasks"];
         for (var i = 0; i < tasklist.length; i++) {
             var t = tasklist[i];
-            $("#tasklist ul").append("<li>" + t.description + "</li>"); // same as t["description"}
+            $("#tasklist ul").append("<li><a >Delete</a> " + t.description + " " +t.urgent+ "</li>"); // same as t["description"}
         }
     });
 }
