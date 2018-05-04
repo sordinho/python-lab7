@@ -1,0 +1,27 @@
+{% extends "bootstrap/base.html" %}
+{% block title %}Task List{% endblock %}
+
+{% block scripts %}
+    {# Needed to not overwrite other scripts imported by flask #}
+    {{ super() }}
+    <script src="{{ url_for('static', filename='tasks.js') }}"></script>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>Task List</h1>
+        <div id="tasklist">
+
+        </div>
+        <div id="insertTask">
+            <form class="form-inline">
+                <div class="form-group">
+                    Task:
+                    <input type="text" class="form-control" name="description"/>
+                </div>
+                <button class="form-control" id="addTask">Add</button>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}
