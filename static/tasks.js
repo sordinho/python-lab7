@@ -9,12 +9,16 @@ function loadList() {
         var tasklist = data["tasks"];
         for (var i = 0; i < tasklist.length; i++) {
             var t = tasklist[i];
-            $("#tasklist ul").append("<li><button id='removeTask' idTask='" + t.id + "' onclick='removeTask(" + t.id + ")'>Delete</button> " + t.description + " " + t.urgent + "</li>"); // same as t["description"}
+            $("#tasklist ul").append("<li><button id='removeTask' onclick='removeTask(this)' data-id='" + t.id + "'>Delete</button> <button id='updateTask'>Update</button> t.description t.urgent </li>");
         }
+
+
     });
 }
 
-function removeTask(idTask) {
+function removeTask(taskElement) {
+    var idTask = taskElement.getAttribute("data-id");
+    alert(idTask);
     $.ajax({
         url: RESTAPI + "/tasks/" + idTask,
         type: 'DELETE',
@@ -22,6 +26,12 @@ function removeTask(idTask) {
     });
     //location.reload();
     return false;
+}
+
+function updateTask(id,desc,urg){
+    alert(id);
+    alert(desc);
+    alert(urg);
 }
 
 $(document).ready(function () {
