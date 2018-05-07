@@ -9,17 +9,18 @@ function loadList() {
         var tasklist = data["tasks"];
         for (var i = 0; i < tasklist.length; i++) {
             var t = tasklist[i];
-            $("#tasklist ul").append("<li><button id='removeTask' idTask='"+t.id+"' onclick='removeTask("+t.id+")'>Delete</button> " + t.description + " " +t.urgent+ "</li>"); // same as t["description"}
+            $("#tasklist ul").append("<li><button id='removeTask' idTask='" + t.id + "' onclick='removeTask(" + t.id + ")'>Delete</button> " + t.description + " " + t.urgent + "</li>"); // same as t["description"}
         }
     });
 }
 
-function removeTask(idTask){
+function removeTask(idTask) {
     $.ajax({
-        url: RESTAPI+"/tasks/"+idTask,
+        url: RESTAPI + "/tasks/" + idTask,
         type: 'DELETE',
+
     });
-    location.reload();
+    //location.reload();
     return false;
 }
 
@@ -28,6 +29,11 @@ $(document).ready(function () {
     $("form").submit(function () {
         var description = $("input[name='description']").val();
         var urgent = 0;
+
+        if ($('#urgentTaskCheck').is(":checked")) {
+            // alert(urgent);
+            urgent = 1;
+        }
         var task = {"description": description, "urgent": urgent};
 
         var taskJSON = JSON.stringify(task);
@@ -36,7 +42,9 @@ $(document).ready(function () {
             "url": RESTAPI + '/tasks',
             "data": taskJSON,
             "contentType": "application/json",
-            "success": function(){loadList()}
+            "success": function () {
+                loadList()
+            }
         });
         return true;
     });
